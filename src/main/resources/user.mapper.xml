@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiyue.day50.dto.userMapper">
+
+    <!--如果列名和封装对象的元素名不同，则不能使用resuleType-->
+    <resultMap id="userDto" type="com.shiyue.day50.dao.User">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="sex" column="user_sex"/>
+        <result property="password" column="user_password"/>
+        <result property="email" column="user_email"/>
+        <association property="departmentDto" javaType="com.shiyue.day50.dao.User">
+            <id property="deptId" column="dept_id"/>
+            <result property="deptName" column="dept_name"/>
+        </association>
+    </resultMap>
+
+    <select id="queryUser" resultType="com.shiyue.day50.dao.User">
+        SELECT * from tb_user
+    </select>
+
+    <select id="quereyUserById" resultMap="userDto">
+        SELECT * FROM  tb_user WHERE user_id=#{user_id}
+    </select>
+
+    <insert id="saveUser">
+        INSERT INTO tb_user(user_name,user_email,user_sex,user_password)
+        VALUES (#{userName},#{email},#{sex},#{password})
+    </insert>
+
+    <insert id="addUser">
+
+    </insert>
+</mapper>
